@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THREADLINE — Premium Custom Apparel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f7f3ee;
+    --black: #111010;
+    --charcoal: #2a2a2a;
+    --gold: #b8965a;
+    --gold-light: #d4b07a;
+    --muted: #888;
+    --border: #e0dbd3;
+    --red: #c0392b;
+    --green: #27ae60;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--black); min-height: 100vh; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 999;
+    background: rgba(247,243,238,0.96); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; color: var(--black);
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 400; color: var(--charcoal); text-decoration: none; cursor: pointer;
+    position: relative; padding-bottom: 2px; transition: color 0.2s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+    background: var(--gold); transition: width 0.3s;
+  }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .cart-btn {
+    display: flex; align-items: center; gap: 6px; cursor: pointer;
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--black); color: var(--cream); padding: 8px 18px; border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .cart-btn:hover { background: var(--gold); }
+  .cart-count {
+    background: var(--gold); color: white; border-radius: 50%;
+    width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* PAGES */
+  .page { display: none; padding-top: 64px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ============ HOME ============ */
+  .hero {
+    height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; position: relative; overflow: hidden; background: var(--black);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #111 0%, #1a1510 40%, #0d0d0d 100%);
+  }
+  .hero-texture {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, #fff 2px, #fff 3px);
+  }
+  .hero-accent {
+    position: absolute; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,150,90,0.15) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.1)} }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px; font-weight: 400;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.9; color: var(--cream); font-weight: 300; letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 0.9rem; color: rgba(247,243,238,0.5); letter-spacing: 0.08em;
+    max-width: 420px; margin: 0 auto 48px; line-height: 1.7;
+  }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; }
+  .btn-primary {
+    padding: 14px 40px; background: var(--gold); color: var(--black);
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-weight: 500; transition: all 0.2s; border-radius: 2px;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline {
+    padding: 14px 40px; background: transparent; color: var(--cream);
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    border: 1px solid rgba(247,243,238,0.3); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-weight: 400; transition: all 0.2s; border-radius: 2px;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .scroll-hint {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    color: rgba(247,243,238,0.3); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollDown 2s infinite; }
+  @keyframes scrollDown { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+  .home-features { padding: 120px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; line-height: 1.1; }
+  .feature-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 60px; }
+  .feature-card {
+    background: var(--black); color: var(--cream); padding: 48px 36px;
+    position: relative; overflow: hidden; cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-4px); }
+  .feature-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+    background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .feature-card:hover::before { transform: scaleX(1); }
+  .feature-num { font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300; color: rgba(255,255,255,0.06); position: absolute; top: 16px; right: 24px; line-height: 1; }
+  .feature-icon { font-size: 2rem; margin-bottom: 20px; }
+  .feature-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 12px; }
+  .feature-card p { font-size: 0.85rem; color: rgba(247,243,238,0.5); line-height: 1.7; }
+
+  .home-cta { background: var(--gold); padding: 80px 40px; text-align: center; }
+  .home-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,4vw,3.5rem); font-weight: 300; color: var(--black); margin-bottom: 24px; }
+  .home-cta p { font-size: 0.9rem; color: rgba(17,16,16,0.6); margin-bottom: 36px; }
+  .btn-dark { padding: 14px 40px; background: var(--black); color: var(--cream); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; transition: all 0.2s; border-radius: 2px; }
+  .btn-dark:hover { background: var(--charcoal); }
+
+  /* ============ ABOUT ============ */
+  .about-hero { background: var(--black); padding: 100px 40px; text-align: center; }
+  .about-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem,7vw,6rem); font-weight: 300; color: var(--cream); }
+  .about-hero h1 em { font-style: italic; color: var(--gold); }
+  .about-content { max-width: 900px; margin: 80px auto; padding: 0 40px; }
+  .about-block { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 80px; }
+  .about-block.reverse { direction: rtl; }
+  .about-block.reverse > * { direction: ltr; }
+  .about-img-box {
+    aspect-ratio: 3/4; background: var(--black); border-radius: 2px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; font-size: 8rem; position: relative;
+  }
+  .about-img-box::after {
+    content: ''; position: absolute; inset: 16px; border: 1px solid rgba(184,150,90,0.3);
+  }
+  .about-text h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; margin-bottom: 24px; line-height: 1.2; }
+  .about-text p { font-size: 0.9rem; line-height: 1.9; color: var(--charcoal); margin-bottom: 16px; }
+  .about-values { background: var(--black); padding: 80px 40px; }
+  .about-values-inner { max-width: 1200px; margin: 0 auto; }
+  .values-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-top: 48px; }
+  .value-item { padding: 40px 28px; background: rgba(255,255,255,0.04); }
+  .value-icon { font-size: 2rem; margin-bottom: 16px; }
+  .value-item h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--cream); margin-bottom: 8px; }
+  .value-item p { font-size: 0.8rem; color: rgba(247,243,238,0.4); line-height: 1.7; }
+
+  /* ============ DEALS ============ */
+  .deals-header { background: var(--black); padding: 80px 40px; position: relative; overflow: hidden; }
+  .deals-header::before {
+    content: 'SALE'; position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif; font-size: 15rem; font-weight: 600; color: rgba(184,150,90,0.06); line-height: 1;
+  }
+  .deals-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem,6vw,5rem); font-weight: 300; color: var(--cream); }
+  .deals-header p { color: rgba(247,243,238,0.5); margin-top: 12px; font-size: 0.9rem; }
+  .deals-banner { background: var(--gold); padding: 16px 40px; text-align: center; }
+  .deals-banner p { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; color: var(--black); }
+  .deals-grid { max-width: 1200px; margin: 60px auto; padding: 0 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+  .deal-tag { background: var(--red); color: white; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; display: inline-block; margin-bottom: 12px; }
+
+  /* ============ SHOP ============ */
+  .shop-header { padding: 80px 40px 40px; max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; }
+  .shop-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,5vw,4.5rem); font-weight: 300; }
+  .shop-filters { display: flex; gap: 8px; }
+  .filter-btn {
+    padding: 8px 18px; border: 1px solid var(--border); background: transparent;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; border-radius: 2px;
+  }
+  .filter-btn.active, .filter-btn:hover { background: var(--black); color: var(--cream); border-color: var(--black); }
+  .shop-grid { max-width: 1200px; margin: 0 auto 80px; padding: 0 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 32px; }
+
+  /* PRODUCT CARD */
+  .product-card { cursor: pointer; }
+  .product-img {
+    aspect-ratio: 3/4; background: #1a1a1a; border-radius: 2px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; font-size: 6rem;
+    margin-bottom: 16px; position: relative; transition: transform 0.4s;
+  }
+  .product-card:hover .product-img { transform: scale(1.02); }
+  .product-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--gold); color: var(--black); font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 2px;
+  }
+  .product-badge.sale { background: var(--red); color: white; }
+  .product-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 4px; }
+  .product-info .product-type { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .product-price { display: flex; align-items: center; gap: 10px; }
+  .product-price .price { font-size: 1rem; font-weight: 500; }
+  .product-price .old-price { font-size: 0.85rem; color: var(--muted); text-decoration: line-through; }
+  .product-price .discount { font-size: 0.75rem; color: var(--red); letter-spacing: 0.05em; }
+  .quick-add {
+    width: 100%; margin-top: 12px; padding: 10px; background: var(--black); color: var(--cream);
+    border: none; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; border-radius: 2px;
+  }
+  .quick-add:hover { background: var(--gold); color: var(--black); }
+
+  /* ============ PRODUCT DETAIL ============ */
+  .product-detail { max-width: 1100px; margin: 60px auto 100px; padding: 0 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .detail-img { aspect-ratio: 3/4; background: #111; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 10rem; position: sticky; top: 80px; }
+  .detail-info .back-link { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); cursor: pointer; margin-bottom: 24px; display: inline-flex; align-items: center; gap: 6px; }
+  .detail-info .back-link:hover { color: var(--gold); }
+  .detail-info h1 { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; margin-bottom: 8px; }
+  .detail-type { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+  .detail-price { font-size: 1.8rem; font-weight: 500; margin-bottom: 32px; }
+  .detail-price .original { font-size: 1.2rem; color: var(--muted); text-decoration: line-through; margin-left: 8px; font-weight: 400; }
+  .size-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; font-weight: 500; }
+  .size-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .size-btn { width: 44px; height: 44px; border: 1px solid var(--border); background: transparent; font-size: 0.8rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; border-radius: 2px; }
+  .size-btn.active, .size-btn:hover { background: var(--black); color: var(--cream); border-color: var(--black); }
+  .color-grid { display: flex; gap: 8px; margin-bottom: 32px; }
+  .color-swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
+  .color-swatch.active { border-color: var(--gold); }
+  .detail-actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .btn-add-cart { padding: 16px; background: var(--black); color: var(--cream); border: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; border-radius: 2px; transition: background 0.2s; }
+  .btn-add-cart:hover { background: var(--gold); color: var(--black); }
+  .btn-mockup { padding: 16px; background: transparent; color: var(--black); border: 1px solid var(--black); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 400; border-radius: 2px; transition: all 0.2s; }
+  .btn-mockup:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
+  .detail-desc { font-size: 0.875rem; line-height: 1.9; color: var(--charcoal); margin-bottom: 24px; }
+  .detail-meta { border-top: 1px solid var(--border); padding-top: 24px; }
+  .detail-meta p { font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
+  .detail-meta strong { color: var(--black); }
+
+  /* ============ MOCKUP MODAL ============ */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2000;
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--cream); border-radius: 4px; width: 90%; max-width: 860px;
+    max-height: 90vh; overflow-y: auto; position: relative;
+  }
+  .modal-header { padding: 32px 40px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .modal-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; }
+  .modal-close { width: 40px; height: 40px; background: transparent; border: 1px solid var(--border); border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .modal-close:hover { background: var(--black); color: var(--cream); border-color: var(--black); }
+  .modal-body { padding: 32px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .mockup-canvas-area { position: relative; aspect-ratio: 3/4; background: #f0ece6; border-radius: 2px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .mockup-garment { font-size: 12rem; user-select: none; }
+  .mockup-design-overlay {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%);
+    width: 40%; text-align: center; pointer-events: none;
+  }
+  .mockup-design-overlay .design-text {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+  .mockup-controls h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 20px; }
+  .ctrl-group { margin-bottom: 20px; }
+  .ctrl-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; font-weight: 500; }
+  .garment-options { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+  .garment-opt { padding: 8px; border: 1px solid var(--border); background: white; font-size: 0.75rem; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: center; border-radius: 2px; transition: all 0.15s; }
+  .garment-opt.active, .garment-opt:hover { border-color: var(--black); background: var(--black); color: var(--cream); }
+  .color-options { display: flex; gap: 8px; flex-wrap: wrap; }
+  .color-opt { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
+  .color-opt.active { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(184,150,90,0.3); }
+  .design-input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); background: white; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; border-radius: 2px; }
+  .design-input:focus { outline: none; border-color: var(--gold); }
+  .print-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .print-opt { padding: 8px 10px; border: 1px solid var(--border); background: white; font-size: 0.72rem; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: center; border-radius: 2px; transition: all 0.15s; }
+  .print-opt.active, .print-opt:hover { border-color: var(--gold); background: rgba(184,150,90,0.1); }
+  .modal-footer { padding: 24px 40px; border-top: 1px solid var(--border); display: flex; gap: 12px; }
+  .modal-footer .btn-primary { flex: 1; }
+
+  /* ============ CART ============ */
+  .cart-layout { max-width: 1100px; margin: 40px auto 100px; padding: 0 40px; display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: start; }
+  .cart-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; margin-bottom: 32px; }
+  .cart-items-list { border-top: 1px solid var(--border); }
+  .cart-item { display: grid; grid-template-columns: 100px 1fr auto; gap: 20px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--border); }
+  .cart-item-img { aspect-ratio: 1; background: #111; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+  .cart-item-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 4px; }
+  .cart-item-info p { font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; }
+  .qty-ctrl { display: flex; align-items: center; gap: 12px; }
+  .qty-btn { width: 28px; height: 28px; border: 1px solid var(--border); background: transparent; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; border-radius: 2px; }
+  .qty-btn:hover { background: var(--black); color: var(--cream); border-color: var(--black); }
+  .qty-num { font-size: 0.9rem; font-weight: 500; min-width: 20px; text-align: center; }
+  .cart-item-price { font-size: 1.1rem; font-weight: 500; }
+  .remove-item { font-size: 0.7rem; color: var(--muted); cursor: pointer; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; display: block; }
+  .remove-item:hover { color: var(--red); }
+  .cart-empty { text-align: center; padding: 80px 0; }
+  .cart-empty p { color: var(--muted); margin-bottom: 24px; }
+
+  /* ORDER SUMMARY */
+  .order-summary { background: var(--black); color: var(--cream); padding: 36px; border-radius: 2px; position: sticky; top: 80px; }
+  .order-summary h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 24px; }
+  .summary-row { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 12px; }
+  .summary-row.total { font-size: 1.1rem; font-weight: 500; border-top: 1px solid rgba(247,243,238,0.15); padding-top: 16px; margin-top: 8px; }
+  .summary-row.total span:last-child { color: var(--gold); }
+  .shipping-opts { margin: 24px 0; }
+  .shipping-opts h4 { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(247,243,238,0.5); margin-bottom: 12px; }
+  .shipping-opt { display: flex; align-items: flex-start; gap: 12px; padding: 14px; border: 1px solid rgba(247,243,238,0.12); border-radius: 2px; margin-bottom: 8px; cursor: pointer; transition: border-color 0.2s; }
+  .shipping-opt.selected { border-color: var(--gold); background: rgba(184,150,90,0.08); }
+  .shipping-opt input[type="radio"] { margin-top: 2px; accent-color: var(--gold); }
+  .shipping-opt-info strong { font-size: 0.85rem; display: block; margin-bottom: 2px; }
+  .shipping-opt-info span { font-size: 0.75rem; color: rgba(247,243,238,0.5); }
+  .shipping-opt-price { margin-left: auto; font-size: 0.85rem; color: var(--gold); font-weight: 500; }
+  .checkout-btn { width: 100%; padding: 16px; background: var(--gold); color: var(--black); border: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; transition: background 0.2s; border-radius: 2px; margin-top: 16px; }
+  .checkout-btn:hover { background: var(--gold-light); }
+  .aae-note { font-size: 0.72rem; color: rgba(247,243,238,0.35); margin-top: 12px; text-align: center; letter-spacing: 0.04em; }
+
+  /* ============ CHECKOUT MODAL ============ */
+  .checkout-form { padding: 32px 40px; }
+  .checkout-form h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; margin-bottom: 32px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1/-1; }
+  .form-group label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; }
+  .form-group input, .form-group select { padding: 12px 14px; border: 1px solid var(--border); background: white; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; border-radius: 2px; }
+  .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--gold); }
+  .place-order-btn { width: 100%; margin-top: 24px; padding: 16px; background: var(--gold); color: var(--black); border: none; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; border-radius: 2px; transition: background 0.2s; }
+  .place-order-btn:hover { background: var(--gold-light); }
+
+  /* SUCCESS */
+  .success-screen { text-align: center; padding: 80px 40px; }
+  .success-screen .check { font-size: 4rem; margin-bottom: 24px; }
+  .success-screen h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; margin-bottom: 16px; }
+  .success-screen p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 8px; }
+  .aae-btn { margin-top: 32px; padding: 14px 40px; background: var(--black); color: var(--cream); border: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; border-radius: 2px; transition: background 0.2s; display: inline-block; text-decoration: none; }
+  .aae-btn:hover { background: var(--gold); color: var(--black); }
+
+  /* FOOTER */
+  footer { background: var(--black); color: var(--cream); padding: 60px 40px 32px; }
+  .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 48px; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-logo span { color: var(--gold); }
+  .footer-desc { font-size: 0.8rem; color: rgba(247,243,238,0.4); line-height: 1.8; max-width: 280px; }
+  .footer-col h4 { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .footer-col a { display: block; font-size: 0.82rem; color: rgba(247,243,238,0.5); margin-bottom: 10px; cursor: pointer; text-decoration: none; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(247,243,238,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(247,243,238,0.3); }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 32px; right: 32px; background: var(--black); color: var(--cream); padding: 16px 24px; border-radius: 4px; font-size: 0.85rem; z-index: 3000; transform: translateY(100px); opacity: 0; transition: all 0.3s; border-left: 3px solid var(--gold); max-width: 320px; }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .about-block { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+    .product-detail { grid-template-columns: 1fr; }
+    .cart-layout { grid-template-columns: 1fr; }
+    .modal-body { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .shop-header { flex-direction: column; gap: 20px; align-items: flex-start; }
+    .shop-filters { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="navigate('home')">THREAD<span>LINE</span></div>
+  <div class="nav-links">
+    <a onclick="navigate('home')" id="nav-home" class="active">Home</a>
+    <a onclick="navigate('about')" id="nav-about">About</a>
+    <a onclick="navigate('deals')" id="nav-deals">Best Deals</a>
+    <a onclick="navigate('shop')" id="nav-shop">Shop</a>
+  </div>
+  <div class="cart-btn" onclick="navigate('cart')">
+    🛒 Cart <span class="cart-count" id="cart-count">0</span>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MOCKUP MODAL -->
+<div class="modal-overlay" id="mockup-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Design Your Mockup</h2>
+      <button class="modal-close" onclick="closeMockup()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mockup-canvas-area" id="mockup-canvas">
+        <div class="mockup-garment" id="mockup-garment">👕</div>
+        <div class="mockup-design-overlay">
+          <div class="design-text" id="mockup-design-text" style="color:#fff">THREADLINE</div>
+        </div>
+      </div>
+      <div class="mockup-controls">
+        <h3>Customize Your Design</h3>
+        <div class="ctrl-group">
+          <div class="ctrl-label">Garment Type</div>
+          <div class="garment-options">
+            <div class="garment-opt active" onclick="setGarment('👕','T-Shirt',this)">T-Shirt</div>
+            <div class="garment-opt" onclick="setGarment('🧥','Hoodie',this)">Hoodie</div>
+            <div class="garment-opt" onclick="setGarment('🎽','Tank',this)">Tank Top</div>
+            <div class="garment-opt" onclick="setGarment('🧤','Cap',this)">Cap</div>
+            <div class="garment-opt" onclick="setGarment('🩱','Crop',this)">Crop Top</div>
+            <div class="garment-opt" onclick="setGarment('🧣','Scarf',this)">Scarf</div>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <div class="ctrl-label">Garment Color</div>
+          <div class="color-options">
+            <div class="color-opt active" style="background:#111010" onclick="setGarmentColor('#111010','#fff',this)"></div>
+            <div class="color-opt" style="background:#fff;border:1px solid #ddd" onclick="setGarmentColor('#f7f3ee','#111',this)"></div>
+            <div class="color-opt" style="background:#1a3a5c" onclick="setGarmentColor('#1a3a5c','#fff',this)"></div>
+            <div class="color-opt" style="background:#c0392b" onclick="setGarmentColor('#c0392b','#fff',this)"></div>
+            <div class="color-opt" style="background:#27ae60" onclick="setGarmentColor('#27ae60','#fff',this)"></div>
+            <div class="color-opt" style="background:#b8965a" onclick="setGarmentColor('#b8965a','#111',this)"></div>
+            <div class="color-opt" style="background:#6c3483" onclick="setGarmentColor('#6c3483','#fff',this)"></div>
+            <div class="color-opt" style="background:#555" onclick="setGarmentColor('#555','#fff',this)"></div>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <div class="ctrl-label">Design Text</div>
+          <input class="design-input" type="text" placeholder="Enter your text..." value="THREADLINE" oninput="updateDesignText(this.value)">
+        </div>
+        <div class="ctrl-group">
+          <div class="ctrl-label">Print Color</div>
+          <div class="color-options">
+            <div class="color-opt active" style="background:#fff;border:1px solid #ddd" onclick="setDesignColor('#fff',this)"></div>
+            <div class="color-opt" style="background:#111" onclick="setDesignColor('#111',this)"></div>
+            <div class="color-opt" style="background:#b8965a" onclick="setDesignColor('#b8965a',this)"></div>
+            <div class="color-opt" style="background:#c0392b" onclick="setDesignColor('#c0392b',this)"></div>
+            <div class="color-opt" style="background:#f1c40f" onclick="setDesignColor('#f1c40f',this)"></div>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <div class="ctrl-label">Print Location</div>
+          <div class="print-opts">
+            <div class="print-opt active" onclick="setPrintLoc('60%',this)">Center Chest</div>
+            <div class="print-opt" onclick="setPrintLoc('30%',this)">Left Chest</div>
+            <div class="print-opt" onclick="setPrintLoc('75%',this)">Lower Front</div>
+            <div class="print-opt" onclick="setPrintLoc('45%',this)">Upper Back</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-primary" style="flex:1" onclick="addMockupToCart()">Add This Design to Cart</button>
+      <button class="btn-outline" style="color:var(--black);border-color:var(--border);padding:14px 24px" onclick="closeMockup()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal" style="max-width:660px">
+    <div class="modal-header">
+      <h2>Complete Your Order</h2>
+      <button class="modal-close" onclick="closeCheckout()">✕</button>
+    </div>
+    <div id="checkout-content">
+      <div class="checkout-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="cf-first" placeholder="Jason">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="cf-last" placeholder="Slaughter">
+          </div>
+          <div class="form-group full">
+            <label>Email Address</label>
+            <input type="email" id="cf-email" placeholder="customer@email.com">
+          </div>
+          <div class="form-group full">
+            <label>Shipping Address</label>
+            <input type="text" id="cf-address" placeholder="123 Main St, City, MI 48000">
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" id="cf-phone" placeholder="(248) 555-0100">
+          </div>
+          <div class="form-group">
+            <label>Promo Code</label>
+            <input type="text" placeholder="Optional">
+          </div>
+        </div>
+        <div style="margin-top:24px;padding:16px;background:#f0ece6;border-radius:2px">
+          <p style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;margin-bottom:12px">Order Notification</p>
+          <p style="font-size:0.82rem;color:var(--muted);line-height:1.6">Upon placing your order, a notification will be sent to <strong style="color:var(--black)">jason.slaughter@pccsk12.com</strong> for verification. Your supplies will also be queued for the AAE supplier cart. You'll receive a confirmation email once verified.</p>
+        </div>
+        <button class="place-order-btn" onclick="placeOrder()">Place Order & Notify Supplier</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE: HOME ============ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-texture"></div>
+    <div class="hero-accent"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Premium Custom Apparel · Est. 2024</p>
+      <h1 class="hero-title">Wear<br>Your<br><em>Story</em></h1>
+      <p class="hero-sub">Custom-crafted apparel designed to make a statement. Every thread, every stitch — made for you.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="navigate('shop')">Shop Collection</button>
+        <button class="btn-outline" onclick="navigate('deals')">View Deals</button>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+
+  <div class="home-features">
+    <div class="section-label">Why Threadline</div>
+    <h2 class="section-title">Built Different.<br>Worn Better.</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-num">01</div>
+        <div class="feature-icon">✦</div>
+        <h3>Custom Mockups</h3>
+        <p>Visualize your design on any garment before you buy. See exactly what you'll get — colors, placement, everything.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-num">02</div>
+        <div class="feature-icon">◈</div>
+        <h3>Fast Fulfillment</h3>
+        <p>Choose your shipping speed. Super-fast, regular, or budget — we get your order moving the moment it's verified.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-num">03</div>
+        <div class="feature-icon">❋</div>
+        <h3>Premium Materials</h3>
+        <p>Every blank sourced from top suppliers. Soft, durable, and built to last wash after wash after wash.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED PRODUCTS -->
+  <div style="max-width:1200px;margin:0 auto 80px;padding:0 40px">
+    <div class="section-label">Featured</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px">
+      <h2 class="section-title">New Arrivals</h2>
+      <button class="btn-primary" onclick="navigate('shop')">View All</button>
+    </div>
+    <div class="shop-grid" style="padding:0">
+      <div id="home-featured"></div>
+    </div>
+  </div>
+
+  <div class="home-cta">
+    <h2>Design Something<br><em style="font-style:italic">Unforgettable</em></h2>
+    <p>Start with a blank. End with a masterpiece. Our mockup tool makes it effortless.</p>
+    <button class="btn-dark" onclick="navigate('shop')">Start Designing →</button>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">THREAD<span>LINE</span></div>
+        <p class="footer-desc">Premium custom apparel crafted with care. Your brand, your way — from blank to brilliant.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a onclick="navigate('shop')">All Products</a>
+        <a onclick="navigate('deals')">Best Deals</a>
+        <a onclick="navigate('about')">Our Story</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:jason.slaughter@pccsk12.com">Email Us</a>
+        <a>Instagram</a>
+        <a>TikTok</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Threadline. All rights reserved.</p>
+      <p>Free shipping on orders over $75</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ PAGE: ABOUT ============ -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <p style="font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Our Story</p>
+    <h1>More Than Just <em>Fabric</em></h1>
+  </div>
+  <div class="about-content">
+    <div class="about-block">
+      <div class="about-img-box">👕</div>
+      <div class="about-text">
+        <h2>We Started with a Simple Idea</h2>
+        <p>Threadline was born from a frustration — it was too hard to get quality custom apparel without dealing with minimums, long waits, or uninspired designs. We built a better way.</p>
+        <p>Every order is treated like it matters, because it does. Whether you're outfitting a team, launching a brand, or just want something that's truly yours — we're here for it.</p>
+        <button class="btn-primary" onclick="navigate('shop')">Shop Now</button>
+      </div>
+    </div>
+    <div class="about-block reverse">
+      <div class="about-img-box">🎨</div>
+      <div class="about-text">
+        <h2>Designed to Be Worn, Not Stored</h2>
+        <p>We obsess over quality. Every blank is carefully selected for feel, durability, and printability. Our printing process uses industry-leading techniques that hold up wash after wash.</p>
+        <p>Use our mockup tool to see your design before it's ever printed. What you see is what you get — no surprises.</p>
+      </div>
+    </div>
+  </div>
+  <div class="about-values">
+    <div class="about-values-inner">
+      <div class="section-label" style="color:var(--gold)">What We Stand For</div>
+      <h2 class="section-title" style="color:var(--cream)">Our Values</h2>
+      <div class="values-grid">
+        <div class="value-item">
+          <div class="value-icon">⚡</div>
+          <h3>Speed</h3>
+          <p>Fast fulfillment without cutting corners. We move quickly so you don't have to wait.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">✦</div>
+          <h3>Quality</h3>
+          <p>Premium blanks, top-tier printing. Every item leaves our floor looking perfect.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🔍</div>
+          <h3>Transparency</h3>
+          <p>See your design before it ships. No hidden fees, no surprises on your bill.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🤝</div>
+          <h3>Community</h3>
+          <p>We're local, we care, and we love supporting the people around us.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">THREAD<span>LINE</span></div>
+        <p class="footer-desc">Premium custom apparel crafted with care.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a onclick="navigate('home')">Home</a>
+        <a onclick="navigate('shop')">Shop</a>
+        <a onclick="navigate('deals')">Deals</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:jason.slaughter@pccsk12.com">Email Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Threadline. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ PAGE: DEALS ============ -->
+<div class="page" id="page-deals">
+  <div class="deals-header">
+    <p style="font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Limited Time</p>
+    <h1>Best Deals &<br>Current Offers</h1>
+    <p>Save big on premium apparel — deals updated weekly.</p>
+  </div>
+  <div class="deals-banner">
+    <p>🔥 Free shipping on all orders over $75 · Use code <strong>THREAD20</strong> for 20% off your first order</p>
+  </div>
+  <div class="deals-grid" id="deals-container"></div>
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">THREAD<span>LINE</span></div>
+        <p class="footer-desc">Premium custom apparel crafted with care.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a onclick="navigate('home')">Home</a>
+        <a onclick="navigate('shop')">Full Shop</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:jason.slaughter@pccsk12.com">Email Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Threadline. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ PAGE: SHOP ============ -->
+<div class="page" id="page-shop">
+  <div class="shop-header">
+    <div>
+      <div class="section-label">Full Collection</div>
+      <h1 class="section-title">All Products</h1>
+    </div>
+    <div class="shop-filters">
+      <button class="filter-btn active" onclick="filterShop('all',this)">All</button>
+      <button class="filter-btn" onclick="filterShop('tops',this)">Tops</button>
+      <button class="filter-btn" onclick="filterShop('hoodies',this)">Hoodies</button>
+      <button class="filter-btn" onclick="filterShop('accessories',this)">Accessories</button>
+    </div>
+  </div>
+  <div class="shop-grid" id="shop-container"></div>
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">THREAD<span>LINE</span></div>
+        <p class="footer-desc">Premium custom apparel crafted with care.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a onclick="navigate('home')">Home</a>
+        <a onclick="navigate('deals')">Deals</a>
+        <a onclick="navigate('about')">About</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:jason.slaughter@pccsk12.com">Email Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Threadline. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ PAGE: PRODUCT DETAIL ============ -->
+<div class="page" id="page-product">
+  <div class="product-detail" id="product-detail-content"></div>
+</div>
+
+<!-- ============ PAGE: CART ============ -->
+<div class="page" id="page-cart">
+  <div style="max-width:1100px;margin:40px auto 0;padding:0 40px">
+    <div class="section-label">Your Bag</div>
+    <h1 class="cart-title">Shopping Cart</h1>
+  </div>
+  <div class="cart-layout">
+    <div id="cart-items-container"></div>
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+      <div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">$0.00</span></div>
+      <div class="summary-row"><span>Items</span><span id="summary-items">0</span></div>
+      <div class="shipping-opts">
+        <h4>Shipping Method</h4>
+        <label class="shipping-opt selected">
+          <input type="radio" name="shipping" value="free" checked onchange="updateShipping(this)">
+          <div class="shipping-opt-info">
+            <strong>Standard (Free)</strong>
+            <span>7–14 business days</span>
+          </div>
+          <span class="shipping-opt-price">FREE</span>
+        </label>
+        <label class="shipping-opt">
+          <input type="radio" name="shipping" value="regular" onchange="updateShipping(this)">
+          <div class="shipping-opt-info">
+            <strong>Regular</strong>
+            <span>3–5 business days</span>
+          </div>
+          <span class="shipping-opt-price">$7.99</span>
+        </label>
+        <label class="shipping-opt">
+          <input type="radio" name="shipping" value="express" onchange="updateShipping(this)">
+          <div class="shipping-opt-info">
+            <strong>Super-Fast Express</strong>
+            <span>1–2 business days</span>
+          </div>
+          <span class="shipping-opt-price">$19.99</span>
+        </label>
+      </div>
+      <div class="summary-row"><span>Shipping</span><span id="summary-shipping">FREE</span></div>
+      <div class="summary-row total"><span>Total</span><span id="summary-total">$0.00</span></div>
+      <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
+      <p class="aae-note">✦ Supplies will be automatically queued to your AAE cart upon order verification</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ DATA ============
+const products = [
+  { id:1, name:'Classic Logo Tee', type:'tops', emoji:'👕', price:28, colors:['#111','#fff','#1a3a5c','#c0392b'], sizes:['XS','S','M','L','XL','XXL'], desc:'Our signature tee in premium 100% ring-spun cotton. Ultra-soft, structured fit with reinforced seams. Perfect canvas for any custom design.', badge:'New', aae:'GD100' },
+  { id:2, name:'Oversized Streetwear Tee', type:'tops', emoji:'👕', price:34, oldPrice:42, colors:['#111','#555','#1a3a5c'], sizes:['S','M','L','XL','XXL'], desc:'Boxy, relaxed cut with dropped shoulders. Heavyweight cotton for a premium drape. The go-to for any streetwear brand.', badge:'Sale', aae:'BX220' },
+  { id:3, name:'Premium Pullover Hoodie', type:'hoodies', emoji:'🧥', price:58, colors:['#111','#1a3a5c','#c0392b','#555'], sizes:['XS','S','M','L','XL','XXL'], desc:'Heavyweight fleece-lined hoodie with kangaroo pocket and adjustable drawcord. An essential for any collection.', badge:'Popular', aae:'HD500' },
+  { id:4, name:'Zip-Up Coach Jacket', type:'hoodies', emoji:'🧥', price:72, colors:['#111','#1a3a5c','#b8965a'], sizes:['S','M','L','XL'], desc:'Lightweight coach jacket with full-zip front, two side pockets, and a clean, structured silhouette. Perfect for logos and embroidery.', badge:'', aae:'JK330' },
+  { id:5, name:'Performance Tank Top', type:'tops', emoji:'🎽', price:22, colors:['#111','#fff','#27ae60','#c0392b'], sizes:['XS','S','M','L','XL'], desc:'Moisture-wicking performance fabric. Racerback cut for full range of motion. Great for athletic or lifestyle brands.', badge:'', aae:'TK150' },
+  { id:6, name:'Dad Hat', type:'accessories', emoji:'🧢', price:26, colors:['#111','#1a3a5c','#b8965a','#fff'], sizes:['One Size'], desc:'Unstructured low-profile hat with curved brim and adjustable strap. Ideal for embroidered logos and minimal designs.', badge:'New', aae:'HA200' },
+  { id:7, name:'Heavyweight Crewneck', type:'hoodies', emoji:'🧥', price:52, oldPrice:65, colors:['#111','#555','#fff'], sizes:['S','M','L','XL','XXL'], desc:'14oz heavyweight fleece crewneck. Garment-washed for a vintage feel. Holds screen print beautifully front and back.', badge:'Sale', aae:'CR600' },
+  { id:8, name:'Tote Bag', type:'accessories', emoji:'👜', price:18, colors:['#f7f3ee','#111'], sizes:['One Size'], desc:'Natural canvas tote with long handles and a flat bottom gusset. Great for screen printing and perfect retail add-on.', badge:'', aae:'TB050' },
+];
+
+let cart = JSON.parse(localStorage.getItem('threadline-cart') || '[]');
+let currentProduct = null;
+let shippingCost = 0;
+
+// ============ NAVIGATION ============
+function navigate(page, productId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  
+  document.getElementById('page-'+page).classList.add('active');
+  const navEl = document.getElementById('nav-'+page);
+  if(navEl) navEl.classList.add('active');
+  
+  window.scrollTo(0,0);
+  
+  if(page === 'shop') renderShop();
+  if(page === 'deals') renderDeals();
+  if(page === 'cart') renderCart();
+  if(page === 'product' && productId) renderProductDetail(productId);
+  if(page === 'home') renderHomeFeatured();
+  
+  updateCartCount();
+}
+
+// ============ RENDER HELPERS ============
+function productCard(p, showDealTag) {
+  const hasDiscount = p.oldPrice;
+  const discount = hasDiscount ? Math.round((1 - p.price/p.oldPrice)*100) : 0;
+  return `
+    <div class="product-card" onclick="navigate('product',${p.id})">
+      <div class="product-img" style="background:${p.colors[0]}">
+        <span>${p.emoji}</span>
+        ${p.badge ? `<div class="product-badge ${p.badge==='Sale'?'sale':''}">${p.badge}</div>` : ''}
+        ${showDealTag && hasDiscount ? `<div class="product-badge sale" style="top:40px">-${discount}%</div>` : ''}
+      </div>
+      <div class="product-info">
+        ${showDealTag ? `<div class="deal-tag">Limited Offer</div>` : ''}
+        <h3>${p.name}</h3>
+        <p class="product-type">${p.type}</p>
+        <div class="product-price">
+          <span class="price">$${p.price.toFixed(2)}</span>
+          ${hasDiscount ? `<span class="old-price">$${p.oldPrice.toFixed(2)}</span><span class="discount">-${discount}%</span>` : ''}
+        </div>
+        <button class="quick-add" onclick="event.stopPropagation();quickAdd(${p.id})">+ Quick Add</button>
+      </div>
+    </div>`;
+}
+
+function renderHomeFeatured() {
+  const featured = products.slice(0,3);
+  const container = document.getElementById('home-featured');
+  if(!container) return;
+  container.parentElement.innerHTML = featured.map(p => productCard(p)).join('');
+}
+
+function renderShop(filter='all') {
+  const filtered = filter === 'all' ? products : products.filter(p => p.type === filter);
+  document.getElementById('shop-container').innerHTML = filtered.map(p => productCard(p)).join('');
+}
+
+function renderDeals() {
+  const deals = products.filter(p => p.oldPrice || p.badge === 'New' || p.badge === 'Popular');
+  document.getElementById('deals-container').innerHTML = deals.map(p => productCard(p, true)).join('');
+}
+
+function filterShop(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderShop(cat);
+}
+
+function renderProductDetail(id) {
+  const p = products.find(pr => pr.id === id);
+  if(!p) return;
+  currentProduct = p;
+  const hasDiscount = p.oldPrice;
+  const colors = p.colors.map((c,i) => `<div class="color-swatch${i===0?' active':''}" style="background:${c}" onclick="this.parentElement.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('active'));this.classList.add('active')"></div>`).join('');
+  const sizes = p.sizes.map((s,i) => `<button class="size-btn${i===0?' active':''}" onclick="this.parentElement.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')">${s}</button>`).join('');
+  
+  document.getElementById('product-detail-content').innerHTML = `
+    <div class="detail-img" style="background:${p.colors[0]}">${p.emoji}</div>
+    <div class="detail-info">
+      <span class="back-link" onclick="history.go(-1) || navigate('shop')">← Back to Shop</span>
+      ${p.badge ? `<div class="deal-tag">${p.badge}</div>` : ''}
+      <h1>${p.name}</h1>
+      <p class="detail-type">${p.type} · AAE SKU: ${p.aae}</p>
+      <div class="detail-price">
+        $${p.price.toFixed(2)}
+        ${hasDiscount ? `<span class="original">$${p.oldPrice.toFixed(2)}</span>` : ''}
+      </div>
+      <p class="size-label">Size</p>
+      <div class="size-grid">${sizes}</div>
+      <p class="size-label">Color</p>
+      <div class="color-grid">${colors}</div>
+      <p class="detail-desc">${p.desc}</p>
+      <div class="detail-actions">
+        <button class="btn-add-cart" onclick="addToCart(${p.id})">Add to Cart</button>
+        <button class="btn-mockup" onclick="openMockup(${p.id})">🎨 Design Your Mockup</button>
+      </div>
+      <div class="detail-meta">
+        <p><strong>Free Shipping</strong> on orders over $75</p>
+        <p><strong>Supplier:</strong> AAE · SKU: ${p.aae}</p>
+        <p><strong>Estimated Delivery:</strong> 7–14 days (standard)</p>
+        <p><strong>Returns:</strong> 30-day hassle-free returns</p>
+      </div>
+    </div>`;
+}
+
+// ============ CART ============
+function addToCart(id) {
+  const p = products.find(pr => pr.id === id);
+  const existing = cart.find(i => i.id === id);
+  if(existing) existing.qty++;
+  else cart.push({ id, name: p.name, price: p.price, emoji: p.emoji, qty: 1 });
+  saveCart();
+  showToast(`✓ ${p.name} added to cart`);
+}
+
+function quickAdd(id) { addToCart(id); }
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  saveCart();
+  renderCart();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if(item) {
+    item.qty += delta;
+    if(item.qty <= 0) removeFromCart(id);
+    else { saveCart(); renderCart(); }
+  }
+}
+
+function saveCart() {
+  localStorage.setItem('threadline-cart', JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const count = cart.reduce((a,i) => a+i.qty, 0);
+  document.getElementById('cart-count').textContent = count;
+}
+
+function renderCart() {
+  const container = document.getElementById('cart-items-container');
+  if(cart.length === 0) {
+    container.innerHTML = `<div class="cart-empty"><p style="font-size:3rem">🛒</p><p>Your cart is empty</p><button class="btn-primary" onclick="navigate('shop')">Continue Shopping</button></div>`;
+  } else {
+    container.innerHTML = `<div class="cart-items-list">${cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-img">${item.emoji}</div>
+        <div class="cart-item-info">
+          <h4>${item.name}</h4>
+          <p>$${item.price.toFixed(2)} each</p>
+          <div class="qty-ctrl">
+            <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+          </div>
+          <span class="remove-item" onclick="removeFromCart(${item.id})">Remove</span>
+        </div>
+        <div class="cart-item-price">$${(item.price*item.qty).toFixed(2)}</div>
+      </div>`).join('')}</div>`;
+  }
+  updateSummary();
+}
+
+function updateSummary() {
+  const subtotal = cart.reduce((a,i) => a + i.price*i.qty, 0);
+  const items = cart.reduce((a,i) => a+i.qty, 0);
+  const total = subtotal + shippingCost;
+  document.getElementById('summary-subtotal').textContent = '$'+subtotal.toFixed(2);
+  document.getElementById('summary-items').textContent = items;
+  document.getElementById('summary-shipping').textContent = shippingCost === 0 ? 'FREE' : '$'+shippingCost.toFixed(2);
+  document.getElementById('summary-total').textContent = '$'+total.toFixed(2);
+}
+
+function updateShipping(radio) {
+  document.querySelectorAll('.shipping-opt').forEach(o => o.classList.remove('selected'));
+  radio.closest('.shipping-opt').classList.add('selected');
+  const costs = { free:0, regular:7.99, express:19.99 };
+  shippingCost = costs[radio.value] || 0;
+  updateSummary();
+}
+
+// ============ MOCKUP ============
+function openMockup(id) {
+  currentProduct = products.find(p => p.id === id);
+  document.getElementById('mockup-modal').classList.add('open');
+}
+
+function closeMockup() {
+  document.getElementById('mockup-modal').classList.remove('open');
+}
+
+function setGarment(emoji, name, btn) {
+  document.querySelectorAll('.garment-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('mockup-garment').textContent = emoji;
+}
+
+function setGarmentColor(bg, textColor, btn) {
+  document.querySelectorAll('#mockup-modal .color-options:first-of-type .color-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('mockup-canvas').style.background = bg+'22';
+  document.getElementById('mockup-garment').style.filter = bg === '#111010' ? 'none' : 'none';
+}
+
+function updateDesignText(val) {
+  document.getElementById('mockup-design-text').textContent = val || 'THREADLINE';
+}
+
+function setDesignColor(color, btn) {
+  const allColorOpts = document.querySelectorAll('#mockup-modal .color-options');
+  allColorOpts[allColorOpts.length-1].querySelectorAll('.color-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('mockup-design-text').style.color = color;
+}
+
+function setPrintLoc(top, btn) {
+  document.querySelectorAll('.print-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelector('.mockup-design-overlay').style.top = top;
+}
+
+function addMockupToCart() {
+  if(currentProduct) addToCart(currentProduct.id);
+  closeMockup();
+}
+
+// ============ CHECKOUT ============
+function openCheckout() {
+  if(cart.length === 0) { showToast('Your cart is empty!'); return; }
+  document.getElementById('checkout-modal').classList.add('open');
+}
+
+function closeCheckout() {
+  document.getElementById('checkout-modal').classList.remove('open');
+}
+
+function placeOrder() {
+  const first = document.getElementById('cf-first').value;
+  const last = document.getElementById('cf-last').value;
+  const email = document.getElementById('cf-email').value;
+  const address = document.getElementById('cf-address').value;
+  
+  if(!first || !email || !address) { showToast('Please fill in required fields'); return; }
+  
+  const subtotal = cart.reduce((a,i) => a + i.price*i.qty, 0);
+  const total = subtotal + shippingCost;
+  const itemsList = cart.map(i => `${i.name} x${i.qty} @ $${i.price} (AAE SKU: ${products.find(p=>p.id===i.id).aae})`).join('\n');
+  
+  // Simulate email notification to owner
+  const subject = encodeURIComponent(`[THREADLINE] New Order — ${first} ${last} — $${total.toFixed(2)}`);
+  const body = encodeURIComponent(`New order received!\n\nCustomer: ${first} ${last}\nEmail: ${email}\nAddress: ${address}\n\nItems:\n${itemsList}\n\nSubtotal: $${subtotal.toFixed(2)}\nShipping: ${shippingCost === 0 ? 'FREE' : '$'+shippingCost.toFixed(2)}\nTotal: $${total.toFixed(2)}\n\nAAE Cart Items:\n${cart.map(i=>`- ${products.find(p=>p.id===i.id).aae} x${i.qty}`).join('\n')}\n\nPlease verify and approve this order.`);
+  
+  window.open(`mailto:jason.slaughter@pccsk12.com?subject=${subject}&body=${body}`);
+  
+  // Show success
+  document.getElementById('checkout-content').innerHTML = `
+    <div class="success-screen">
+      <div class="check">✅</div>
+      <h2>Order Placed!</h2>
+      <p><strong>${first} ${last}</strong>, your order has been received.</p>
+      <p>A verification notification has been sent to the store owner.</p>
+      <p>You'll receive a confirmation at <strong>${email}</strong> once approved.</p>
+      <p style="margin-top:16px;font-size:0.75rem;color:var(--muted)">AAE SKUs queued: ${cart.map(i=>products.find(p=>p.id===i.id).aae).join(', ')}</p>
+      <a class="aae-btn" href="https://www.alphabroder.com" target="_blank">Open AAE / Supplier Cart →</a>
+      <br><br>
+      <button class="btn-primary" onclick="closeCheckout();cart=[];saveCart();renderCart();navigate('home')" style="margin-top:8px">Back to Shop</button>
+    </div>`;
+}
+
+// ============ TOAST ============
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ============ INIT ============
+window.addEventListener('DOMContentLoaded', () => {
+  updateCartCount();
+  renderHomeFeatured();
+});
+</script>
+</body>
+</html>
